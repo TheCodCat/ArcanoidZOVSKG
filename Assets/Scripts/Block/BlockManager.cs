@@ -32,6 +32,7 @@ public class BlockManager : MonoBehaviour
             block => Destroy(block),
             true, _defaultCount, _maxCount);
         OnDestroyBlock += DestroedBlock;
+        GameInput.OnRestartLVL += RestartLVL;
 
         _texture = new Texture2D(_wigth, _height);
 
@@ -97,5 +98,10 @@ public class BlockManager : MonoBehaviour
             PerlineMap();
             CreateMap(_texture);
         }
+    }
+
+    private void RestartLVL()
+    {
+        CreateMap(_texture);
     }
 }

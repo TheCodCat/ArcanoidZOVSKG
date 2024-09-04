@@ -736,6 +736,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f02073cbb25bc0443bf0887c51f6260f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerDamage: {fileID: 1413512450}
   parent: {fileID: 1413512449}
 --- !u!1 &1155964850
 GameObject:
@@ -991,6 +992,7 @@ MonoBehaviour:
   _speed: 40
   _border: 7.5
   _maxBounceAngle: 75
+  _maxHP: 2
   _camera: {fileID: 963194227}
   _startButton: {fileID: 1989286532}
 --- !u!50 &1413512451

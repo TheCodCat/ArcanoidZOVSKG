@@ -1,14 +1,15 @@
 using UnityEngine;
 
-
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour,IDamage
 {
     public float _speed;
     public float _border;
     public float _maxBounceAngle;
+    [SerializeField] private int _maxHP;
     [SerializeField] private Camera _camera;
     [SerializeField] private GameObject _startButton;
     public Rigidbody2D _rb { get; set; }
+    private int _hp;
     private Vector2 _moveDirection;
 
     public Camera Camera => _camera;
@@ -19,6 +20,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _hp = _maxHP;
 
         _machine = new StateMachine();
         _pauseState = new PauseState(this);
@@ -33,6 +35,16 @@ public class Player : MonoBehaviour
     {
         _startButton.SetActive(false);
         _machine.ChangeState(_moveState);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        _hp -= damage;
+        if(_hp <= 0)
+        {
+            _hp = _maxHP;
+            GameInput.OnRestartLVL?.Invoke();
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {

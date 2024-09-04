@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class GameInput : MonoBehaviour
 {
+    public static UnityAction OnRestartLVL;
     public static event Action<InputAction.CallbackContext> InputDirection;
     public static event Action<InputAction.CallbackContext> Spaces;
     private PlayerInput inputActions;

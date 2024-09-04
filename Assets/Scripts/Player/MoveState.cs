@@ -14,9 +14,13 @@ public class MoveState : State
     public override void Enter()
     {
         GameInput.InputDirection += GetInputMove;
+        _direction = Vector2.zero;
 
-        _direction = (Vector2)_player.Camera.ScreenToWorldPoint(_mousePosition);
+        _direction.x = ((Vector2)_player.Camera.ScreenToWorldPoint(_mousePosition)).x;
         _direction.y = _player._rb.position.y;
+
+        _direction.x = Mathf.Clamp(_direction.x, -_player._border, _player._border);
+        _player._rb.MovePosition(Vector2.MoveTowards(_player._rb.position, _direction, _player._speed * Time.deltaTime));
     }
 
     public override void Exit()
@@ -26,7 +30,7 @@ public class MoveState : State
 
     public override void Update()
     {
-        _direction = (Vector2)_player.Camera.ScreenToWorldPoint(_mousePosition);
+        _direction.x = ((Vector2)_player.Camera.ScreenToWorldPoint(_mousePosition)).x;
         _direction.y = _player._rb.position.y;
 
         _direction.x = Mathf.Clamp(_direction.x, -_player._border, _player._border);
