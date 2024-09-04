@@ -3,9 +3,9 @@ using UnityEngine.InputSystem;
 
 public class MoveState : State
 {
-    public float _direction;
-    private Vector2 _moveDirection;
+    public Vector2 _mousePosition;
 
+    private Vector2 _direction;
     private Player _player;
     public MoveState(Player player)
     {
@@ -14,7 +14,9 @@ public class MoveState : State
     public override void Enter()
     {
         GameInput.InputDirection += GetInputMove;
-        _moveDirection.y = _player._rb.position.y;
+
+        _direction = (Vector2)_player.Camera.ScreenToWorldPoint(_mousePosition);
+        _direction.y = _player._rb.position.y;
     }
 
     public override void Exit()
@@ -24,12 +26,14 @@ public class MoveState : State
 
     public override void Update()
     {
-        _moveDirection.x = _player._rb.position.x + _direction * _player._speed * Time.deltaTime;
-        _moveDirection.x = Mathf.Clamp(_moveDirection.x, -_player._border, _player._border);
-        _player._rb.MovePosition(_moveDirection);
+        _direction = (Vector2)_player.Camera.ScreenToWorldPoint(_mousePosition);
+        _direction.y = _player._rb.position.y;
+
+        _direction.x = Mathf.Clamp(_direction.x, -_player._border, _player._border);
+        _player._rb.MovePosition(Vector2.MoveTowards(_player._rb.position,_direction,_player._speed * Time.deltaTime));
     }
     public void GetInputMove(InputAction.CallbackContext context)
     {
-        _direction = context.ReadValue<Vector2>().x;
+        _mousePosition = context.ReadValue<Vector2>();
     }
 }

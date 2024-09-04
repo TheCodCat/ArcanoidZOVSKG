@@ -9,6 +9,7 @@ public class BlockManager : MonoBehaviour
     public static UnityAction<Block> OnDestroyBlock;
     public static UnityAction OnNewLVL;
     [SerializeField] private BallCreator _ballCreator;
+    [SerializeField] private BDBlock _bdBlock;
     [SerializeField] private int _countBlock;
     [SerializeField] private Block _block;
     [SerializeField] private int _defaultCount;
@@ -62,9 +63,22 @@ public class BlockManager : MonoBehaviour
                 Block _myBlock = _objectPool.Get();
                 _myBlock.name = $"Block{x}{y}";
                 _myBlock.transform.SetParent(transform);
-
-                _myBlock.transform.position = new Vector3(((_wigth-1) * 0.5f-x) * _offset.x, ((_height - 1) * 0.5f - y) * _offset.y, 0);
-                _myBlock.Init(_texture.GetPixel(x, y));
+                _myBlock.transform.position = new Vector3(((_wigth-1) * 0.5f-x) * _offset.x, ((_height - 1) * 0.5f - y) * _offset.y, 0) + transform.position;
+                Color _grad = _texture.GetPixel(x,y);
+                int _indexBlock;
+                if(_grad.r >=0 && _grad.r < 0.5)
+                {
+                    _indexBlock = 0;
+                }
+                else if(_grad.r >= 0.5 && _grad.r <= 0.7)
+                {
+                    _indexBlock = 1;
+                }
+                else
+                {
+                    _indexBlock = 2;
+                }
+                _myBlock.Init(_bdBlock.blocks[_indexBlock].spritesHP, _bdBlock.blocks[_indexBlock].HP);
                 _countBlock++;
             }
         }

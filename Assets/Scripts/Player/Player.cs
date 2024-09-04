@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 
 public class Player : MonoBehaviour
@@ -9,19 +6,22 @@ public class Player : MonoBehaviour
     public float _speed;
     public float _border;
     public float _maxBounceAngle;
+    [SerializeField] private Camera _camera;
+    [SerializeField] private GameObject _startButton;
     public Rigidbody2D _rb { get; set; }
     private Vector2 _moveDirection;
 
-    private StateMachine _machine;
-    private PauseState _pauseState;
-    private MoveState _moveState;
+    public Camera Camera => _camera;
+    public StateMachine _machine { get; set; }
+    public PauseState _pauseState { get; set; }
+    public MoveState _moveState { get; set; }
 
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
 
         _machine = new StateMachine();
-        _pauseState = new PauseState();
+        _pauseState = new PauseState(this);
         _moveState = new MoveState(this);
         _machine.Init(_pauseState);
     }
@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
     }
     public void StartButton()
     {
+        _startButton.SetActive(false);
         _machine.ChangeState(_moveState);
     }
     private void OnCollisionEnter2D(Collision2D collision)

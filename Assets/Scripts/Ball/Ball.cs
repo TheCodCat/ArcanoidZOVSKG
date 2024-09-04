@@ -25,6 +25,7 @@ public class Ball : MonoBehaviour
     }
     private void Update()
     {
+        Debug.Log(_ballStateMachine._currentBallState);
         _ballStateMachine._currentBallState.Update();
     }
     public void Restart()

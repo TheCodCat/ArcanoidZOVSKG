@@ -28,15 +28,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ""id"": ""b60ee529-7127-4714-86f7-1bfd29f822ac"",
             ""actions"": [
                 {
-                    ""name"": ""MoveDirection"",
-                    ""type"": ""Value"",
-                    ""id"": ""59de32e4-9182-4a21-bf5f-f2a4dd9920f9"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""Space"",
                     ""type"": ""Button"",
                     ""id"": ""7e1a55ec-d3ca-4c02-aea3-ad36e5563ae6"",
@@ -44,42 +35,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MousePosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""ca163296-556c-440c-b8d1-c9d1d37114ba"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": ""2D Vector"",
-                    ""id"": ""3dba3573-a135-4654-b700-382e64190aef"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveDirection"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""d817eea1-e955-49c0-929e-b3ca012078f2"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveDirection"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""96f22763-fdee-4af4-9d64-790a9bafe726"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveDirection"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
                 {
                     ""name"": """",
                     ""id"": ""b34c13e0-a67f-40ca-93f9-e03633bdb8af"",
@@ -90,6 +57,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Space"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""50bed70d-e118-4f92-b55a-f5ca6fd5e6f9"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MousePosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -98,8 +76,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
 }");
         // Game
         m_Game = asset.FindActionMap("Game", throwIfNotFound: true);
-        m_Game_MoveDirection = m_Game.FindAction("MoveDirection", throwIfNotFound: true);
         m_Game_Space = m_Game.FindAction("Space", throwIfNotFound: true);
+        m_Game_MousePosition = m_Game.FindAction("MousePosition", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -161,14 +139,14 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     // Game
     private readonly InputActionMap m_Game;
     private List<IGameActions> m_GameActionsCallbackInterfaces = new List<IGameActions>();
-    private readonly InputAction m_Game_MoveDirection;
     private readonly InputAction m_Game_Space;
+    private readonly InputAction m_Game_MousePosition;
     public struct GameActions
     {
         private @PlayerInput m_Wrapper;
         public GameActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @MoveDirection => m_Wrapper.m_Game_MoveDirection;
         public InputAction @Space => m_Wrapper.m_Game_Space;
+        public InputAction @MousePosition => m_Wrapper.m_Game_MousePosition;
         public InputActionMap Get() { return m_Wrapper.m_Game; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -178,22 +156,22 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_GameActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_GameActionsCallbackInterfaces.Add(instance);
-            @MoveDirection.started += instance.OnMoveDirection;
-            @MoveDirection.performed += instance.OnMoveDirection;
-            @MoveDirection.canceled += instance.OnMoveDirection;
             @Space.started += instance.OnSpace;
             @Space.performed += instance.OnSpace;
             @Space.canceled += instance.OnSpace;
+            @MousePosition.started += instance.OnMousePosition;
+            @MousePosition.performed += instance.OnMousePosition;
+            @MousePosition.canceled += instance.OnMousePosition;
         }
 
         private void UnregisterCallbacks(IGameActions instance)
         {
-            @MoveDirection.started -= instance.OnMoveDirection;
-            @MoveDirection.performed -= instance.OnMoveDirection;
-            @MoveDirection.canceled -= instance.OnMoveDirection;
             @Space.started -= instance.OnSpace;
             @Space.performed -= instance.OnSpace;
             @Space.canceled -= instance.OnSpace;
+            @MousePosition.started -= instance.OnMousePosition;
+            @MousePosition.performed -= instance.OnMousePosition;
+            @MousePosition.canceled -= instance.OnMousePosition;
         }
 
         public void RemoveCallbacks(IGameActions instance)
@@ -213,7 +191,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     public GameActions @Game => new GameActions(this);
     public interface IGameActions
     {
-        void OnMoveDirection(InputAction.CallbackContext context);
         void OnSpace(InputAction.CallbackContext context);
+        void OnMousePosition(InputAction.CallbackContext context);
     }
 }

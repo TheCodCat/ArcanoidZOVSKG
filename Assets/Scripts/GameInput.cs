@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class GameInput : MonoBehaviour
 {
@@ -16,9 +15,7 @@ public class GameInput : MonoBehaviour
         inputActions = new PlayerInput();
         inputActions.Enable();
 
-        inputActions.Game.MoveDirection.started += ctx => OnDirection(ctx);
-        inputActions.Game.MoveDirection.performed += ctx => OnDirection(ctx);
-        inputActions.Game.MoveDirection.canceled += ctx => OnDirection(ctx);
+        inputActions.Game.MousePosition.performed += ctx => OnDirection(ctx);
 
         inputActions.Game.Space.performed += ctx => Space(ctx);
     }
@@ -29,6 +26,7 @@ public class GameInput : MonoBehaviour
 
     private void Space(InputAction.CallbackContext context)
     {
+        Debug.Log("Jump");
         Spaces?.Invoke(context);
     }
 }
