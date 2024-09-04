@@ -86,7 +86,6 @@ public class BlockManager : MonoBehaviour
 
     private void DestroedBlock(Block block)
     {
-        Debug.Log(block);
         _countBlock--;
         _objectPool.Release(block);
         if(_countBlock <= 0)

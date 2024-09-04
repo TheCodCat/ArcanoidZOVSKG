@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PauseStateBall : BallState
 {
@@ -13,12 +12,15 @@ public class PauseStateBall : BallState
     }
     public override void Enter()
     {
+        Debug.Log("PauseBall");
         NotActiove(_player.transform);
+        GameInput.Spaces += Starts;
     }
 
     public override void Exit()
     {
-        base.Exit();
+        Debug.Log("NotPauseBall");
+        GameInput.Spaces -= Starts;
     }
 
     public void NotActiove(Transform parent)
@@ -28,5 +30,10 @@ public class PauseStateBall : BallState
         _ball.transform.position = (Vector2)parent.position + _ball._offset;
         _ball.Rigibody2D.bodyType = RigidbodyType2D.Kinematic;
         _ball.Rigibody2D.velocity = Vector2.zero;
+    }
+    public void Starts(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+            _ball._ballStateMachine.ShangeState(_ball._gameStateBall);
     }
 }

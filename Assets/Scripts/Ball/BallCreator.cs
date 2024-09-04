@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BallCreator : MonoBehaviour
@@ -12,6 +10,11 @@ public class BallCreator : MonoBehaviour
         _ball = _myBall;
         _ball._player = _player;
     }
+
+    public Ball GetBall()
+    {
+        return _ball;
+    }
     public void Pause()
     {
         _ball._ballStateMachine.ShangeState(_ball._pauseStateBall);
@@ -19,13 +22,5 @@ public class BallCreator : MonoBehaviour
     public void Starts()
     {
         _ball._ballStateMachine.ShangeState(_ball._gameStateBall);
-    }
-    public Ball GetBall()
-    {
-        return _ball; 
-    }
-    public Player GetPlayer()
-    {
-        return _player;
     }
 }
