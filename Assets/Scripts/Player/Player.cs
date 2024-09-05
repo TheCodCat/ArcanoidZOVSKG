@@ -14,6 +14,7 @@ public class Player : MonoBehaviour,IDamage
 
     public Camera Camera => _camera;
     public StateMachine _machine { get; set; }
+    public StateTimeine _stateTimeine { get; set; }
     public PauseState _pauseState { get; set; }
     public MoveState _moveState { get; set; }
 
@@ -23,9 +24,12 @@ public class Player : MonoBehaviour,IDamage
         _hp = _maxHP;
 
         _machine = new StateMachine();
+
+        _stateTimeine = new StateTimeine();
         _pauseState = new PauseState(this);
         _moveState = new MoveState(this);
-        _machine.Init(_pauseState);
+
+        _machine.Init(_stateTimeine);
     }
     private void Update()
     {

@@ -13,6 +13,7 @@ public class Ball : MonoBehaviour
     public float _maxMagnitude;
 
     public BallStateMachine _ballStateMachine;
+    public TimeLineStateBall _timeLinelStateBall;
     public PauseStateBall _pauseStateBall;
     public GameStateBall _gameStateBall;
 
@@ -20,9 +21,11 @@ public class Ball : MonoBehaviour
     {
         Rigibody2D = GetComponent<Rigidbody2D>();
         _ballStateMachine = new BallStateMachine();
+
+        _timeLinelStateBall = new TimeLineStateBall();
         _pauseStateBall = new PauseStateBall(this, _player);
         _gameStateBall = new GameStateBall(this);
-        _ballStateMachine.StateInit(_pauseStateBall);
+        _ballStateMachine.StateInit(_timeLinelStateBall);
     }
     private void Update()
     {
