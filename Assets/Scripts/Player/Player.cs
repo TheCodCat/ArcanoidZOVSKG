@@ -8,6 +8,7 @@ public class Player : MonoBehaviour,IDamage
     [SerializeField] private int _maxHP;
     [SerializeField] private Camera _camera;
     [SerializeField] private GameObject _startButton;
+    [SerializeField] private AudioManager _audioManager;
     public Rigidbody2D _rb { get; set; }
     private int _hp;
     private Vector2 _moveDirection;
@@ -31,10 +32,12 @@ public class Player : MonoBehaviour,IDamage
 
         _machine.Init(_stateTimeine);
     }
+
     private void Update()
     {
         _machine.CurrentState.Update();
     }
+
     public void StartButton()
     {
         _startButton.SetActive(false);
@@ -49,6 +52,11 @@ public class Player : MonoBehaviour,IDamage
             _hp = _maxHP;
             GameInput.OnRestartLVL?.Invoke();
         }
+    }
+
+    public void BallCollision()
+    {
+        _audioManager.BallCollision();
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {

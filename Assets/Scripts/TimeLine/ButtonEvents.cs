@@ -15,6 +15,8 @@ public class ButtonEvents : MonoBehaviour
     }
     public void ExitTimeLinePlayer()
     {
+        if (_ball == null || _player._machine == null) return;
+
         _player._machine.ChangeState(_player._pauseState);
         _ball.GetBall()._ballStateMachine.ShangeState(_ball.GetBall()._pauseStateBall);
     }

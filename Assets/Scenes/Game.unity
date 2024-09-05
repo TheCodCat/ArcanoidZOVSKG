@@ -715,7 +715,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1146890567
 Transform:
@@ -726,7 +726,7 @@ Transform:
   m_GameObject: {fileID: 1146890566}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -5, z: 0}
+  m_LocalPosition: {x: 0, y: -5.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1048,6 +1048,7 @@ MonoBehaviour:
   _maxHP: 2
   _camera: {fileID: 963194227}
   _startButton: {fileID: 1989286532}
+  _audioManager: {fileID: 1476960445}
 --- !u!50 &1413512451
 Rigidbody2D:
   serializedVersion: 4
@@ -1171,6 +1172,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1476960443}
   - component: {fileID: 1476960444}
+  - component: {fileID: 1476960445}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -1289,6 +1291,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1476960445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476960442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66ae8a9306eaa284ea9825195da7ab25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioSource: {fileID: 1476960444}
+  _collisionBallclip: {fileID: 8300000, guid: 94d29420da08e514ba5c0be56ce1ec2d, type: 3}
 --- !u!1 &1510745133
 GameObject:
   m_ObjectHideFlags: 0

@@ -36,4 +36,8 @@ public class Ball : MonoBehaviour
         _ballStateMachine.ShangeState(_pauseStateBall);
         _ballStateMachine.ShangeState(_gameStateBall);
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        _player.BallCollision();
+    }
 }
