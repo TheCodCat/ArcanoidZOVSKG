@@ -57,7 +57,7 @@ public class Player : MonoBehaviour,IDamage
     public void TakeDamage(int damage)
     {
         _hp -= damage;
-        float _hpbarf = _hp / _maxHP;
+        float _hpbarf = (float)_hp / (float)_maxHP;
         _hpBar.fillAmount = _hpbarf;
         if(_hp <= 0)
         {

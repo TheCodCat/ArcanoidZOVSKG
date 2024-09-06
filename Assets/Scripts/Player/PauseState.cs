@@ -7,25 +7,9 @@ public class PauseState : State
     {
         _player = player;
     }
-    public override void Enter()
-    {
-        GameInput.Spaces += StartButton;
-    }
-
-    public override void Exit()
-    {
-        GameInput.Spaces -= StartButton;
-    }
 
     public override void Update()
     {
         base.Update();
-    }
-    public void StartButton(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            _player.StartButton();
-        }
     }
 }
