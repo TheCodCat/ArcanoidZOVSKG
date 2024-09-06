@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour,IDamage
 {
@@ -7,8 +8,9 @@ public class Player : MonoBehaviour,IDamage
     public float _maxBounceAngle;
     [SerializeField] private int _maxHP;
     [SerializeField] private Camera _camera;
-    [SerializeField] private GameObject _startButton;
+    [SerializeField] private GameObject _startPannel;
     [SerializeField] private AudioManager _audioManager;
+    [SerializeField] private Image _hpBar;
     public Rigidbody2D _rb { get; set; }
     private int _hp;
     private Vector2 _moveDirection;
@@ -32,6 +34,14 @@ public class Player : MonoBehaviour,IDamage
 
         _machine.Init(_stateTimeine);
     }
+    private void OnEnable()
+    {
+        GameInput.OnRestartLVL += RestartPlayer;
+    }
+    private void OnDisable()
+    {
+        GameInput.OnRestartLVL -= RestartPlayer;
+    }
 
     private void Update()
     {
@@ -40,18 +50,30 @@ public class Player : MonoBehaviour,IDamage
 
     public void StartButton()
     {
-        _startButton.SetActive(false);
+        _startPannel.SetActive(false);
         _machine.ChangeState(_moveState);
     }
 
     public void TakeDamage(int damage)
     {
         _hp -= damage;
+        float _hpbarf = _hp / _maxHP;
+        _hpBar.fillAmount = _hpbarf;
         if(_hp <= 0)
         {
             _hp = _maxHP;
             GameInput.OnRestartLVL?.Invoke();
         }
+    }
+
+    public int GetHP()
+    {
+        return _hp; 
+    }
+
+    private void RestartPlayer()
+    {
+        _machine.ChangeState(_stateTimeine);
     }
 
     public void BallCollision()

@@ -15,8 +15,10 @@ public class BallStateMachine
     }
     public void ShangeState(BallState ballState)
     {
+        Debug.Log($" Прошлое состояние{_currentBallState}");
         _currentBallState.Exit();
         _currentBallState = ballState;
         _currentBallState.Enter();
+        Debug.Log($" Новое состояние{_currentBallState}");
     }
 }

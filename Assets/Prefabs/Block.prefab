@@ -179,3 +179,5 @@ MonoBehaviour:
   _currentHP: 0
   _maxHP: 0
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  _particleSystem: {fileID: 0}
+  _isDestroy: 0

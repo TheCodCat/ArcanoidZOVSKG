@@ -13,11 +13,13 @@ public class GameStateBall : BallState
     public override void Enter()
     {
         GameInput.Spaces += Active;
+        Debug.Log("Подписалить");
     }
 
     public override void Exit()
     {
         GameInput.Spaces -= Active;
+        Debug.LogError("Подписалить");
     }
 
     public override void Update()
@@ -33,6 +35,7 @@ public class GameStateBall : BallState
     {
         if (context.performed && _ball._isActive == false)
         {
+            Debug.Log("Шар активен");
             _ball._isActive = true;
             _ball.transform.SetParent(null);
             _ball.Rigibody2D.bodyType = RigidbodyType2D.Dynamic;

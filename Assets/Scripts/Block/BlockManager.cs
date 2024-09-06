@@ -22,6 +22,7 @@ public class BlockManager : MonoBehaviour
     [SerializeField] private int _wigth;
     [SerializeField] private int _height;
 
+    private List<Block> _blocksList;
     private ObjectPool<Block> _objectPool;
 
     private void Start()
@@ -31,13 +32,21 @@ public class BlockManager : MonoBehaviour
             block => block.gameObject.SetActive(false),
             block => Destroy(block),
             true, _defaultCount, _maxCount);
-        OnDestroyBlock += DestroedBlock;
-        GameInput.OnRestartLVL += RestartLVL;
-
+        _blocksList = new List<Block>();
         _texture = new Texture2D(_wigth, _height);
 
         PerlineMap();
         CreateMap(_texture);
+    }
+    private void OnEnable()
+    {
+        OnDestroyBlock += DestroedBlock;
+        GameInput.OnRestartLVL += RestartLVL;
+    }
+    private void OnDisable()
+    {
+        OnDestroyBlock -= DestroedBlock;
+        GameInput.OnRestartLVL -= RestartLVL;
     }
     private void PerlineMap()
     {
@@ -79,22 +88,31 @@ public class BlockManager : MonoBehaviour
                 {
                     _indexBlock = 2;
                 }
-                _myBlock.Init(_bdBlock.blocks[_indexBlock].spritesHP, _bdBlock.blocks[_indexBlock].HP);
-                _countBlock++;
+                _myBlock.Init(_bdBlock.blocks[_indexBlock].spritesHP, _bdBlock.blocks[_indexBlock].IsDestroy, _bdBlock.blocks[_indexBlock].HP);
+
+                if (_bdBlock.blocks[_indexBlock].IsDestroy)
+                    _countBlock++;
+                else _blocksList.Add(_myBlock);
             }
         }
     }
 
     private void DestroedBlock(Block block)
     {
-        _countBlock--;
         _objectPool.Release(block);
+        _countBlock--;
         if(_countBlock <= 0)
         {
+            for (int i = 0; i < _blocksList.Count; i++)
+            {
+                _objectPool.Release(_blocksList[i]);
+            }
+            _blocksList.Clear();
             OnNewLVL?.Invoke();
             var ball = _ballCreator.GetBall();
-            ball.Restart();
-            _scale++;
+            ball.RemoveToPoint();
+            ball.GameBall();
+            _scale += 1;
             PerlineMap();
             CreateMap(_texture);
         }
@@ -102,6 +120,7 @@ public class BlockManager : MonoBehaviour
 
     private void RestartLVL()
     {
+        _scale = 0;
         CreateMap(_texture);
     }
 }

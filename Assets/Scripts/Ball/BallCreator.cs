@@ -23,4 +23,8 @@ public class BallCreator : MonoBehaviour
     {
         _ball._ballStateMachine.ShangeState(_ball._gameStateBall);
     }
+    public void TimeLines()
+    {
+        _ball._ballStateMachine.ShangeState(_ball._timelineStateBall);
+    }
 }

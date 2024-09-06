@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class Block : MonoBehaviour
@@ -13,11 +14,11 @@ public abstract class Block : MonoBehaviour
     public virtual void TakeBlock()
     {
     }
-    public virtual void Init(Sprite sprite)
+    public virtual void Init(Sprite sprite,bool isdestroy)
     {
         _render.sprite = sprite;
     }
-    public virtual void Init(Sprite sprite, int hp)
+    public virtual void Init(Sprite sprite,bool isdestroy, int hp)
     {
         _render.sprite = sprite;
     }

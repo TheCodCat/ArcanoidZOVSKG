@@ -13,7 +13,7 @@ public class Ball : MonoBehaviour
     public float _maxMagnitude;
 
     public BallStateMachine _ballStateMachine;
-    public TimeLineStateBall _timeLinelStateBall;
+    public TimeLineStateBall _timelineStateBall;
     public PauseStateBall _pauseStateBall;
     public GameStateBall _gameStateBall;
 
@@ -22,19 +22,38 @@ public class Ball : MonoBehaviour
         Rigibody2D = GetComponent<Rigidbody2D>();
         _ballStateMachine = new BallStateMachine();
 
-        _timeLinelStateBall = new TimeLineStateBall();
+        _timelineStateBall = new TimeLineStateBall();
         _pauseStateBall = new PauseStateBall(this, _player);
         _gameStateBall = new GameStateBall(this);
-        _ballStateMachine.StateInit(_timeLinelStateBall);
+        _ballStateMachine.StateInit(_timelineStateBall);
+    }
+    private void OnEnable()
+    {
+        GameInput.OnRestartLVL += Restart;
+    }
+    private void OnDisable()
+    {
+        GameInput.OnRestartLVL -= Restart;
     }
     private void Update()
     {
         _ballStateMachine._currentBallState.Update();
+        //Debug.Log(_ballStateMachine._currentBallState);
     }
-    public void Restart()
+    public void RemoveToPoint()
     {
         _ballStateMachine.ShangeState(_pauseStateBall);
+        //_ballStateMachine.ShangeState(_gameStateBall);
+    }
+    public void GameBall()
+    {
         _ballStateMachine.ShangeState(_gameStateBall);
+    }
+    private void Restart()
+    {
+        Debug.Log("Шар остановился");
+        _ballStateMachine.ShangeState(_timelineStateBall);
+        Debug.Log(_ballStateMachine._currentBallState);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {

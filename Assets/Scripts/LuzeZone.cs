@@ -1,17 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LuzeZone : MonoBehaviour
 {
-    [SerializeField] private Player _playerDamage;
+    [SerializeField] private Player _player;
     [SerializeField] private Transform parent;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.TryGetComponent(out Ball ball))
         {
-            _playerDamage.TakeDamage(1);
-            ball.Restart();
+            Debug.Log(_player.GetHP());
+            if (_player.GetHP() > 0)
+            {
+                ball.RemoveToPoint();
+                ball.GameBall();
+                _player.TakeDamage(1);
+            }
+            Debug.Log(_player.GetHP());
         }
     }
 }

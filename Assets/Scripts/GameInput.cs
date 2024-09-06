@@ -28,7 +28,6 @@ public class GameInput : MonoBehaviour
 
     private void Space(InputAction.CallbackContext context)
     {
-        Debug.Log("Jump");
         Spaces?.Invoke(context);
     }
 }

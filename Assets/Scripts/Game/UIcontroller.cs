@@ -6,6 +6,6 @@ public class UIcontroller : MonoBehaviour
     [SerializeField] private Text _lvlScore;
     public void NewLVLCount(string count)
     {
-        _lvlScore.text = $"LVL:{count}";
+        _lvlScore.text = $"{count}";
     }
 }

@@ -12,15 +12,14 @@ public class PauseStateBall : BallState
     }
     public override void Enter()
     {
-        Debug.Log("PauseBall");
         NotActiove(_player.transform);
         GameInput.Spaces += Starts;
     }
 
     public override void Exit()
     {
-        Debug.Log("NotPauseBall");
         GameInput.Spaces -= Starts;
+        Debug.Log("Отписка");
     }
 
     public void NotActiove(Transform parent)
@@ -33,7 +32,9 @@ public class PauseStateBall : BallState
     }
     public void Starts(InputAction.CallbackContext context)
     {
-        if(context.performed)
+        if (context.performed)
+        {
             _ball._ballStateMachine.ShangeState(_ball._gameStateBall);
+        }
     }
 }

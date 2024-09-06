@@ -7,4 +7,5 @@ public class BlockSetting : ScriptableObject
 {
     public Sprite spritesHP;
     public int HP;
+    public bool IsDestroy;
 }
