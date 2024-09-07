@@ -21,5 +21,8 @@
       Управление мыши-перемещение каретки<br>
      </p>
    <h3>Скрины из игры</h3>
-   <img src = "https://i.postimg.cc/kX80tDNZ/Image-Sequence-001-0050.jpg" align = "center" width = "500">
+    <div align = "center">
+      <img src = "https://i.postimg.cc/kX80tDNZ/Image-Sequence-001-0050.jpg" width = "400">
+      <img src ="https://i.postimg.cc/HxK8760Q/Movie-004.gif" width = "400">
+    </div>
 </body>
