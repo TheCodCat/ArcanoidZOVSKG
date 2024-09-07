@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 098fd663da316f347b47f18c7d1d2020, type: 3}
-  m_Name: GREEN
+  m_Name: 3hp
   m_EditorClassIdentifier: 
-  spritesHP: {fileID: -227613240, guid: 3d1b2418dff0cf240bc03e3688042f6e, type: 3}
-  HP: 2
+  spritesHP: {fileID: 926051192, guid: 3d1b2418dff0cf240bc03e3688042f6e, type: 3}
+  HP: 3
   IsDestroy: 1
+  min: 0.455
+  max: 0.661

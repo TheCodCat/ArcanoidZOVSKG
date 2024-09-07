@@ -6,6 +6,7 @@ using UnityEngine.Pool;
 
 public class BlockManager : MonoBehaviour
 {
+    public static UnityAction<Block> OnParticleDestroy;
     public static UnityAction<Block> OnDestroyBlock;
     public static UnityAction OnNewLVL;
     [SerializeField] private BallCreator _ballCreator;
@@ -25,8 +26,12 @@ public class BlockManager : MonoBehaviour
     private List<Block> _blocksList;
     private ObjectPool<Block> _objectPool;
 
+    [SerializeField] private ParticleSystem _particleSystem;
+    private ObjectPool<ParticleSystem> _particlesPool;
+
     private void Start()
     {
+        #region Pool
         _objectPool = new ObjectPool<Block>(() => Instantiate(_block),
             block => block.gameObject.SetActive(true), 
             block => block.gameObject.SetActive(false),
@@ -35,19 +40,29 @@ public class BlockManager : MonoBehaviour
         _blocksList = new List<Block>();
         _texture = new Texture2D(_wigth, _height);
 
+       _particlesPool = new ObjectPool<ParticleSystem>(
+            () => Instantiate(_particleSystem),
+            ps => gameObject.SetActive(true),
+            ps => gameObject.SetActive(false),
+            ps => Destroy(ps), false, 1, 5);
+        #endregion
+
         PerlineMap();
         CreateMap(_texture);
     }
+
     private void OnEnable()
     {
         OnDestroyBlock += DestroedBlock;
         GameInput.OnRestartLVL += RestartLVL;
     }
+
     private void OnDisable()
     {
         OnDestroyBlock -= DestroedBlock;
         GameInput.OnRestartLVL -= RestartLVL;
     }
+
     private void PerlineMap()
     {
         for (float y = 0f; y < _height; y++)
@@ -71,27 +86,21 @@ public class BlockManager : MonoBehaviour
             for (int x = 0; x < texture2D.width; x++)
             {
                 Block _myBlock = _objectPool.Get();
-                _myBlock.name = $"Block{x}{y}";
                 _myBlock.transform.SetParent(transform);
                 _myBlock.transform.position = new Vector3(((_wigth-1) * 0.5f-x) * _offset.x, ((_height - 1) * 0.5f - y) * _offset.y, 0) + transform.position;
                 Color _grad = _texture.GetPixel(x,y);
-                int _indexBlock;
-                if(_grad.r >=0 && _grad.r < 0.5)
+                int _indexBlock = 0;
+                for (int i = 0; i < _bdBlock.blocks.Length; i++)
                 {
-                    _indexBlock = 0;
-                }
-                else if(_grad.r >= 0.5 && _grad.r <= 0.7)
-                {
-                    _indexBlock = 1;
-                }
-                else
-                {
-                    _indexBlock = 2;
+                    if(_grad.r <= _bdBlock.blocks[i].max && _grad.r >= _bdBlock.blocks[i].min)
+                    {
+                        _indexBlock = i;
+                        break;
+                    }
                 }
                 _myBlock.Init(_bdBlock.blocks[_indexBlock].spritesHP, _bdBlock.blocks[_indexBlock].IsDestroy, _bdBlock.blocks[_indexBlock].HP);
 
-                if (_bdBlock.blocks[_indexBlock].IsDestroy)
-                    _countBlock++;
+                if (_bdBlock.blocks[_indexBlock].IsDestroy) _countBlock ++;
                 else _blocksList.Add(_myBlock);
             }
         }

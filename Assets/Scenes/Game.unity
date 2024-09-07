@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731713, g: 0.13414738, b: 0.121078536, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -264,6 +264,7 @@ MonoBehaviour:
   _scale: 1
   _wigth: 7
   _height: 3
+  _particleSystem: {fileID: 0}
 --- !u!114 &129532644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,6 +280,9 @@ MonoBehaviour:
   blocks:
   - {fileID: 11400000, guid: 85eda20856126b546b1cff58a0ece99c, type: 2}
   - {fileID: 11400000, guid: adfa8168c627f4c42a5e4c220acc8534, type: 2}
+  - {fileID: 11400000, guid: c448261e4c8bada40b6325c5d72a06ce, type: 2}
+  - {fileID: 11400000, guid: 13ea5d6dcc24a434e93fe8cf86e2d9d9, type: 2}
+  - {fileID: 11400000, guid: c7027789d4f90de4a93e5d6d817b876d, type: 2}
   - {fileID: 11400000, guid: d6903871b8d626c4ca97f8e2d0a7804c, type: 2}
 --- !u!1 &149482737
 GameObject:
@@ -1022,7 +1026,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0
-  far clip plane: 10
+  far clip plane: 20
   field of view: 66.8
   orthographic: 1
   orthographic size: 5
@@ -2796,7 +2800,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 963194227}
-  m_PlaneDistance: 5
+  m_PlaneDistance: 15
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -2873,7 +2877,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -3829842220325020194, guid: 1139c5ee1d9bddf4981582019b00c873, type: 2}
   m_audioClip: {fileID: 8300000, guid: a6bca1d2962b64a4581e53d9aab53dce, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 1
   Mute: 0

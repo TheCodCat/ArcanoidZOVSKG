@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour,IDamage
+public class Player : MonoBehaviour,IDamage,IChangeHP
 {
     public float _speed;
     public float _border;
@@ -66,6 +66,21 @@ public class Player : MonoBehaviour,IDamage
         }
     }
 
+    public void RestorHP()
+    {
+        _hp = _maxHP;
+        float _hpbarf = (float)_hp / (float)_maxHP;
+        _hpBar.fillAmount = _hpbarf;
+    }
+
+    public void SetHP()
+    {
+        _hp++;
+        _hp = Mathf.Clamp(_hp,0,_maxHP);
+        float _hpbarf = (float)_hp / (float)_maxHP;
+        _hpBar.fillAmount = _hpbarf;
+    }
+
     public int GetHP()
     {
         return _hp; 
@@ -82,7 +97,8 @@ public class Player : MonoBehaviour,IDamage
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.TryGetComponent(out Ball ball))
+        Debug.Log(collision.gameObject.name);
+        if (collision.gameObject.TryGetComponent(out Ball ball))
         {
             Vector3 _paddlePosition = transform.position;
             Vector2 _contactPosition = collision.GetContact(0).point;
@@ -90,12 +106,20 @@ public class Player : MonoBehaviour,IDamage
             float _offset = _paddlePosition.x - _contactPosition.x;
             float _wigth = collision.otherCollider.bounds.size.x;
 
-            float _currentAngle = Vector2.SignedAngle(Vector2.up,ball.Rigibody2D.velocity);
+            float _currentAngle = Vector2.SignedAngle(Vector2.up, ball.Rigibody2D.velocity);
             float _bounceAngle = (_offset / _wigth) * _maxBounceAngle;
-            float _newAngle = Mathf.Clamp(_currentAngle + _bounceAngle,-_maxBounceAngle,_maxBounceAngle);
+            float _newAngle = Mathf.Clamp(_currentAngle + _bounceAngle, -_maxBounceAngle, _maxBounceAngle);
 
-            Quaternion _rotate = Quaternion.AngleAxis(_newAngle,Vector3.forward);
+            Quaternion _rotate = Quaternion.AngleAxis(_newAngle, Vector3.forward);
             ball.Rigibody2D.velocity = _rotate * Vector2.up * ball.Rigibody2D.velocity.magnitude;
         }
+
+        else if (collision.gameObject.TryGetComponent(out SetHP set))
+        {
+            Debug.Log(set);
+            SetHP();
+            Destroy(set.gameObject);
+        }
     }
+
 }
