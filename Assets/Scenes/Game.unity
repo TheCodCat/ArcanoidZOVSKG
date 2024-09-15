@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731713, g: 0.13414738, b: 0.121078536, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -256,14 +256,14 @@ MonoBehaviour:
   _bdBlock: {fileID: 129532644}
   _countBlock: 0
   _block: {fileID: 5621701224777261073, guid: db167de12e6463849b61b73918b913c7, type: 3}
-  _defaultCount: 21
-  _maxCount: 30
-  _offset: {x: 1.1, y: 1.1}
+  _defaultCount: 50
+  _maxCount: 50
+  _offset: {x: 0.8, y: 0.8}
   _texture: {fileID: 0}
   _seed: 1
   _scale: 1
-  _wigth: 7
-  _height: 3
+  _wigth: 15
+  _height: 5
   _particleSystem: {fileID: 0}
 --- !u!114 &129532644
 MonoBehaviour:
@@ -1479,7 +1479,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23d4f765f0c9f7c4bb5175dbd5d469bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 40
   _border: 7.5
   _maxBounceAngle: 75
   _maxHP: 3
@@ -2040,7 +2039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 306d3c7794afce4488e1e319578730b8, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}

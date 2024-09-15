@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour,IDamage,IChangeHP
 {
-    public float _speed;
     public float _border;
     public float _maxBounceAngle;
     [SerializeField] private int _maxHP;

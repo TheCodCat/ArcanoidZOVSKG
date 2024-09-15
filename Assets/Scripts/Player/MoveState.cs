@@ -20,7 +20,7 @@ public class MoveState : State
         _direction.y = _player._rb.position.y;
 
         _direction.x = Mathf.Clamp(_direction.x, -_player._border, _player._border);
-        _player._rb.MovePosition(Vector2.MoveTowards(_player._rb.position, _direction, _player._speed * Time.deltaTime));
+        _player._rb.MovePosition(_direction);
     }
 
     public override void Exit()
@@ -34,7 +34,7 @@ public class MoveState : State
         _direction.y = _player._rb.position.y;
 
         _direction.x = Mathf.Clamp(_direction.x, -_player._border, _player._border);
-        _player._rb.MovePosition(Vector2.MoveTowards(_player._rb.position,_direction,_player._speed * Time.deltaTime));
+        _player._rb.MovePosition(_direction);
     }
     public void GetInputMove(InputAction.CallbackContext context)
     {

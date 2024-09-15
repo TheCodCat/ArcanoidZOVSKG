@@ -15,5 +15,5 @@ MonoBehaviour:
   spritesHP: {fileID: 926051192, guid: 3d1b2418dff0cf240bc03e3688042f6e, type: 3}
   HP: 3
   IsDestroy: 1
-  min: 0.455
-  max: 0.661
+  min: 0.584
+  max: 0.721
