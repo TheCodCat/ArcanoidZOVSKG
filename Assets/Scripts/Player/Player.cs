@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour,IDamage,IChangeHP
@@ -35,11 +36,13 @@ public class Player : MonoBehaviour,IDamage,IChangeHP
     }
     private void OnEnable()
     {
-        GameInput.OnRestartLVL += RestartPlayer;
+        GameInput.OnRestartLVL += LoseRestartPlayer;
+        GameInput.Restart += RestartPlayer;
     }
     private void OnDisable()
     {
-        GameInput.OnRestartLVL -= RestartPlayer;
+        GameInput.OnRestartLVL -= LoseRestartPlayer;
+        GameInput.Restart -= RestartPlayer;
     }
 
     private void Update()
@@ -85,9 +88,14 @@ public class Player : MonoBehaviour,IDamage,IChangeHP
         return _hp; 
     }
 
-    private void RestartPlayer()
+    private void LoseRestartPlayer()
     {
         _machine.ChangeState(_stateTimeine);
+    }
+    private void RestartPlayer(InputAction.CallbackContext callback)
+    {
+        _machine.ChangeState(_pauseState);
+        _machine.ChangeState(_moveState);
     }
 
     public void BallCollision()

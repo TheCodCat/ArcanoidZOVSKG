@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.Pool;
+using static UnityEditor.Progress;
 
 
 public class BlockManager : MonoBehaviour
@@ -23,7 +25,8 @@ public class BlockManager : MonoBehaviour
     [SerializeField] private int _wigth;
     [SerializeField] private int _height;
 
-    private List<Block> _blocksList;
+    private List<Block> _blocksList = new List<Block>();
+    private List<Block> _allBlocks = new List<Block>();
     private ObjectPool<Block> _objectPool;
 
     [SerializeField] private ParticleSystem _particleSystem;
@@ -49,18 +52,21 @@ public class BlockManager : MonoBehaviour
 
         PerlineMap();
         CreateMap(_texture);
+
     }
 
     private void OnEnable()
     {
         OnDestroyBlock += DestroedBlock;
-        GameInput.OnRestartLVL += RestartLVL;
+        GameInput.OnRestartLVL += LoseRestartLVL;
+        GameInput.Restart += RestartLVL;
     }
 
     private void OnDisable()
     {
         OnDestroyBlock -= DestroedBlock;
-        GameInput.OnRestartLVL -= RestartLVL;
+        GameInput.OnRestartLVL -= LoseRestartLVL;
+        GameInput.Restart -= RestartLVL;
     }
 
     private void PerlineMap()
@@ -81,6 +87,7 @@ public class BlockManager : MonoBehaviour
 
     private void CreateMap(Texture2D texture2D)
     {
+        _countBlock = 0;
         for (int y = 0; y < texture2D.height; y++)
         {
             for (int x = 0; x < texture2D.width; x++)
@@ -100,8 +107,9 @@ public class BlockManager : MonoBehaviour
                 }
                 _myBlock.Init(_bdBlock.blocks[_indexBlock].spritesHP, _bdBlock.blocks[_indexBlock].IsDestroy, _bdBlock.blocks[_indexBlock].HP);
 
-                if (_bdBlock.blocks[_indexBlock].IsDestroy) _countBlock ++;
+                if (_bdBlock.blocks[_indexBlock].IsDestroy)_countBlock++;
                 else _blocksList.Add(_myBlock);
+                _allBlocks.Add(_myBlock);
             }
         }
     }
@@ -109,6 +117,7 @@ public class BlockManager : MonoBehaviour
     private void DestroedBlock(Block block)
     {
         _objectPool.Release(block);
+        _allBlocks.Remove(block);
         _countBlock--;
         if(_countBlock <= 0)
         {
@@ -127,9 +136,20 @@ public class BlockManager : MonoBehaviour
         }
     }
 
-    private void RestartLVL()
+    private void LoseRestartLVL()
     {
         _scale = 0;
+        CreateMap(_texture);
+    }
+
+    private void RestartLVL(InputAction.CallbackContext context)
+    {
+        foreach (var item in _allBlocks)
+        {
+            _objectPool.Release(item);
+
+        }
+        _allBlocks.Clear();
         CreateMap(_texture);
     }
 }

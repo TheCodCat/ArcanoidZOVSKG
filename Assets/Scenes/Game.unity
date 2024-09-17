@@ -256,8 +256,8 @@ MonoBehaviour:
   _bdBlock: {fileID: 129532644}
   _countBlock: 0
   _block: {fileID: 5621701224777261073, guid: db167de12e6463849b61b73918b913c7, type: 3}
-  _defaultCount: 50
-  _maxCount: 50
+  _defaultCount: 75
+  _maxCount: 75
   _offset: {x: 0.8, y: 0.8}
   _texture: {fileID: 0}
   _seed: 1
@@ -403,7 +403,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 50, y: 0}
-  m_SizeDelta: {x: 600, y: 200}
+  m_SizeDelta: {x: 600, y: 250}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &425421221
 MonoBehaviour:
@@ -441,7 +441,8 @@ MonoBehaviour:
   m_Text: "\u0423\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u043A\u0430\u0440\u0435\u0442\u043A\u043E\u0439:\n\u043F\u0435\u0440\u0435\u043C\u0435\u0449\u0435\u043D\u0438\u0435
     \u043C\u044B\u0448\u0438 \u0438\u0437 \u0441\u0442\u043E\u0440\u043E\u043D\u044B\u0439
     \u0432 \u0441\u0442\u043E\u0440\u043E\u043D\u0443\n\u0412\u044B\u0431\u0440\u043E\u0441\u0438\u0442\u044C
-    \u043C\u044F\u0447: - \u043F\u0440\u043E\u0431\u0435\u043B"
+    \u043C\u044F\u0447: - \u043F\u0440\u043E\u0431\u0435\u043B\n\u0420\u0435\u0441\u0442\u0430\u0440\u0442
+    \u0443\u0440\u043E\u0432\u043D\u044F: - R"
 --- !u!222 &425421222
 CanvasRenderer:
   m_ObjectHideFlags: 0

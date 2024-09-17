@@ -1,4 +1,6 @@
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class BallCreator : MonoBehaviour
 {
@@ -10,7 +12,19 @@ public class BallCreator : MonoBehaviour
         _ball = _myBall;
         _ball._player = _player;
     }
-
+    private void OnEnable()
+    {
+        GameInput.Restart += RestartBall;
+    }
+    private void OnDisable()
+    {
+        GameInput.Restart -= RestartBall;
+    }
+    private void RestartBall(InputAction.CallbackContext callback)
+    {
+        Pause();
+        Starts();
+    }
     public Ball GetBall()
     {
         return _ball;
